@@ -1,0 +1,24 @@
+services:
+  postgres:
+    build:
+      context: ./code-intelligence/docker
+      dockerfile: postgres-age-pgvector.Dockerfile
+    container_name: code-intelligence-postgres
+    environment:
+      POSTGRES_USER: code_intelligence
+      POSTGRES_PASSWORD: code_intelligence
+      POSTGRES_DB: code_intelligence
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+      - ./code-intelligence/docker/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./code-intelligence/docker/init-node-platform.sql:/docker-entrypoint-initdb.d/02-init-node-platform.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U code_intelligence -d code_intelligence"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:

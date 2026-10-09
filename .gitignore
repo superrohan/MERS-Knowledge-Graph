@@ -1,0 +1,22 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.log
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.DS_Store
+coverage/
+.vite/
+
+# Fixture repos are sometimes git-initialized locally (to push to GitLab
+# or serve as a file:// remote for testing) - never track that nested
+# repo's internals from the outer project.
+test-repository/.git/
+test-repository-2/.git/
+
+
